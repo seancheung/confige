@@ -1,0 +1,6 @@
+CONFIG_FILE=tests/config/core.json
+
+APP_NAME=myapp
+TAG_KEY=key
+# ARRAY_FIRST=100
+NESTED_FIRST=

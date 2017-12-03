@@ -157,9 +157,16 @@ function load() {
         } else if (stat.isDirectory()) {
             const files = fs
                 .readdirSync(filename)
-                .filter(f => fs.lstatSync(f).isFile() && /.json$/.test(f));
+                .filter(
+                    f =>
+                        fs.lstatSync(path.resolve(filename, f)).isFile() &&
+                        /.json$/.test(f)
+                );
             files.forEach(file => {
-                const content = fs.readFileSync(file, 'utf8');
+                const content = fs.readFileSync(
+                    path.resolve(filename, file),
+                    'utf8'
+                );
                 const basename = path.basename(file, path.extname(file));
                 Object.assign(config, { [basename]: fn.resolve(JSON.parse(content)) });
             });
@@ -170,7 +177,8 @@ function load() {
         clone,
         merge,
         env,
-        resolve: resolve.bind(fn, fn)
+        resolve: resolve.bind(fn, fn),
+        desolve: () => delete require.cache[__filename]
     };
 
     return config;

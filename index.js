@@ -83,7 +83,11 @@ function env(file, inject) {
     }
 
     if (inject) {
-        map.forEach((v, k) => (process.env[k] = v));
+        map.forEach((v, k) => {
+            if (!(k in process.env)) {
+                process.env[k] = v;
+            }
+        });
     }
 
     return map;

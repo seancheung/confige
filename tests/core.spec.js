@@ -1,24 +1,27 @@
 const expect = require('chai').expect;
+const path = require('path');
 
 describe('core test', function() {
     before(function() {
         process.env.CONFIG_FILE = 'tests/config/core.json';
         process.env.APP_NAME = 'myapp';
-        process.env.ARRAY_FIRST = 10;
     });
     it('expect config file to be parsed correctly', function() {
         const config = require('../');
         expect(config).to.be.an('object');
-        expect(config.name).to.eq('myapp');
-        expect(config.tag.key).to.not.exist;
-        expect(config.tag.value).to.eq(3);
-        expect(config.nested).to.eq(1);
-        expect(config.content).to.match(new RegExp(`^${process.cwd()}`));
+        expect(config.env).to.eq('myapp');
+        expect(path.relative(process.cwd(), config.path)).to.eq(
+            path.normalize('storage/content')
+        );
+        expect(config.file).to.eq('this is a test');
+        expect(config.json)
+            .to.be.an('object')
+            .with.property('count')
+            .that.is.a('number');
     });
     after(function() {
         delete process.env.CONFIG_FILE;
         delete process.env.APP_NAME;
-        delete process.env.ARRAY_FIRST;
         delete require.cache[require.resolve('../')];
     });
 });

@@ -1,24 +1,14 @@
 {
-    "name": {
+    "env": {
         "$env": ["APP_NAME", "default"]
     },
-    "tag": {
-        "key": {
-            "$env": "TAG_KEY"
-        },
-        "value": {
-            "$env": ["TAG_VALUE", 3]
-        }
-    },
-    "array": [
-        {
-            "$env": ["ARRAY_FIRST", 0]
-        }
-    ],
-    "nested": {
-        "$env": ["NESTED_FIRST", { "$env": ["NESTED_SECOND", 1] }]
-    },
-    "content": {
+    "path": {
         "$path": "storage/content"
+    },
+    "file": {
+        "$file": ["tests/config/file.txt", "utf8"]
+    },
+    "json": {
+        "$json": "{\"name\":\"test\",\"count\":10}"
     }
 }

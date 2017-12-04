@@ -18,6 +18,7 @@ describe('core test', function() {
             .to.be.an('object')
             .with.property('count')
             .that.is.a('number');
+        expect(config.number).to.eq(1);
     });
     after(function() {
         delete process.env.CONFIG_FILE;

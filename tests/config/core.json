@@ -10,5 +10,8 @@
     },
     "json": {
         "$json": "{\"name\":\"test\",\"count\":10}"
+    },
+    "number": {
+        "$number": "1"
     }
 }

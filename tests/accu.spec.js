@@ -13,6 +13,7 @@ describe('accumulator test', function() {
         expect(config.avg).to.eq(3);
         expect(config.first).to.eq(1);
         expect(config.last).to.eq(5);
+        expect(config.at).to.eq(4);
         expect(config.string).to.eq('thisisatest');
         expect(config.array).to.have.lengthOf(5);
     });

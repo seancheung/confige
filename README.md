@@ -15,7 +15,7 @@ npm i @pyramid/configure
 
 ## Basic Usage
 
-This package by default read a the *config* folder in your working directory:
+This package by default read the *config* folder in your working directory:
 
 - config
     - app.json
@@ -40,7 +40,7 @@ process.env.CONFIG_FILE=src/config.json
 process.env.CONFIG_FILE=/path/to/src/config.json
 ```
 
-If you specified a single file, the config object will be the file itself rather than an nested object with the filename as its key(like folder reading does).
+If you specified a single file, the config object will be the file itself rather than a nested object with the filename as its key(like folder reading does).
 
 *src/config.json*
 ```json
@@ -57,7 +57,7 @@ const config = require('@pyramid/configure');
 console.log(config.app.name)
 ```
 
-It won't load again once loaded. To reload configs, you may call:
+It won't be loaded again once done. To reload configs, you need to call:
 
 ```javascript
 // delete cached config
@@ -366,4 +366,8 @@ $upper, $lower, $snake, $pascal, $camel, $dash, $plural, $singular
 ```bash
 npm test
 ```
+
+## License
+
+See [License](https://github.com/pyramidjs/configure/blob/master/LICENSE)
 

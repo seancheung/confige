@@ -86,9 +86,9 @@ config = require("@pyramid/configure");
 
 ## Env File
 
-By default, This package read a _.env_ file in your working directory and set environment variables from this file.
+By default, This package read a *.env* file in your working directory and get environment variables from this file.
 
-```plain
+```bash
 NODE_ENV=production
 CONFIG_FILE=src/config.json
 ```
@@ -100,9 +100,13 @@ process.env.ENV_FILE=src/.env
 const config = require('@pyramid/configure');
 ```
 
+You may optionally set `ENV_INJECT` to inject env file variables into `process.env`.
+
+
 **Existing environment variables won't be overrided.**
 
 ```bash
+process.env.ENV_INJECT=true
 NODE_ENV=development npm start
 ```
 
@@ -164,7 +168,7 @@ Here is a list of available **keywords**:
 
 **$env**
 
-Get value from environment variables with an optional fallback value
+Get value from environment variables(first try env file, then process.env) with an optional fallback value
 
 * params: `string`|`[string, any]`
 * returns `any`

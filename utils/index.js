@@ -13,12 +13,25 @@ fs
             Object.assign(fn, mod);
         }
     });
-fn.resolve = resolve.bind(fn, fn);
+fn.resolve = resolve.bind(null, fn);
 
+/**
+ * Deep clone an object
+ *
+ * @param {any} source
+ * @returns {any}
+ */
 function clone(source) {
     return source != null ? JSON.parse(JSON.stringify(source)) : source;
 }
 
+/**
+ * Make clones of two objects then merge the second one into the first one and returns the merged object
+ *
+ * @param {any} source
+ * @param {any} target
+ * @returns {any}
+ */
 function merge(source, target) {
     if (target == null) {
         return clone(source);
@@ -50,6 +63,13 @@ function merge(source, target) {
     return merge(clone(source), clone(target));
 }
 
+/**
+ * Read envs from file path
+ *
+ * @param {string} file
+ * @param {boolean} [inject]
+ * @returns {Map<string, string>}
+ */
 function env(file, inject) {
     const map = new Map();
     if (!path.isAbsolute(file)) {
@@ -87,7 +107,7 @@ function env(file, inject) {
     return map;
 }
 
-function resolve(fn, source) {
+function resolve(fn, source, envs) {
     if (source == null) {
         return source;
     }
@@ -95,9 +115,9 @@ function resolve(fn, source) {
         return source;
     }
     for (const key of Object.keys(source)) {
-        let value = resolve(fn, source[key]);
+        let value = resolve(fn, source[key], envs);
         if (key in fn) {
-            value = fn[key](value);
+            value = fn[key].call(null, value, fn, envs);
 
             return value;
         }
@@ -107,7 +127,14 @@ function resolve(fn, source) {
     return source;
 }
 
-function load(filename) {
+/**
+ * Load config
+ *
+ * @param {string} filename
+ * @param {Map<string, string>} [envs]
+ * @returns {any}
+ */
+function load(filename, envs) {
     const config = {};
     if (!path.isAbsolute(filename)) {
         filename = path.resolve(process.cwd(), filename);
@@ -117,7 +144,7 @@ function load(filename) {
         if (stat.isFile()) {
             if (/.json$/.test(filename)) {
                 const content = fs.readFileSync(filename, 'utf8');
-                Object.assign(config, fn.resolve(JSON.parse(content)));
+                Object.assign(config, fn.resolve(JSON.parse(content), envs));
             }
         } else if (stat.isDirectory()) {
             const files = fs
@@ -133,7 +160,7 @@ function load(filename) {
                     'utf8'
                 );
                 const basename = path.basename(file, path.extname(file));
-                Object.assign(config, { [basename]: fn.resolve(JSON.parse(content)) });
+                Object.assign(config, { [basename]: fn.resolve(JSON.parse(content), envs) });
             });
         }
     }
@@ -144,42 +171,28 @@ function load(filename) {
 module.exports = {
     /**
      * Deep clone an object
-     *
-     * @param {any} source
-     * @returns {any}
      */
     clone,
 
     /**
      * Make clones of two objects then merge the second one into the first one and returns the merged object
-     *
-     * @param {any} source
-     * @param {any} target
-     * @returns {any}
      */
     merge,
 
     /**
      * Read envs from file path
-     *
-     * @param {string} file
-     * @param {boolean} inject
-     * @returns {Map<string, string>}
      */
     env,
 
     /**
      * Resolve source
      *
-     * @type {(source: any)=>any}
+     * @type {(source: any, envs?: Map<string, string>)=>any}
      */
     resolve: fn.resolve,
 
     /**
      * Load config
-     *
-     * @param {string} filename
-     * @returns {any}
      */
     load
 };

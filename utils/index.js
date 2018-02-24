@@ -68,10 +68,10 @@ function merge(source, target) {
  *
  * @param {string} file
  * @param {boolean} [inject]
- * @returns {Map<string, string>}
+ * @returns {{[x: string]: string}}
  */
 function env(file, inject) {
-    const map = new Map();
+    const envs = {};
     if (!path.isAbsolute(file)) {
         file = path.resolve(process.cwd(), file);
     }
@@ -91,20 +91,20 @@ function env(file, inject) {
                     v = v.replace(/\\n/gm, '\n');
                 }
                 v = v.replace(/(^['"]|['"]$)/g, '').trim();
-                map.set(k, v);
+                envs[k] = v;
             }
         });
     }
 
     if (inject) {
-        map.forEach((v, k) => {
+        Object.keys(envs).forEach(k => {
             if (!(k in process.env)) {
-                process.env[k] = v;
+                process.env[k] = envs[k];
             }
         });
     }
 
-    return map;
+    return envs;
 }
 
 function resolve(fn, source, envs) {
@@ -131,7 +131,7 @@ function resolve(fn, source, envs) {
  * Load config
  *
  * @param {string} filename
- * @param {Map<string, string>} [envs]
+ * @param {{[x: string]: string}} [envs]
  * @returns {any}
  */
 function load(filename, envs) {
@@ -187,7 +187,7 @@ module.exports = {
     /**
      * Resolve source
      *
-     * @type {(source: any, envs?: Map<string, string>)=>any}
+     * @type {(source: any, envs?: {[x: string]: string})=>any}
      */
     resolve: fn.resolve,
 

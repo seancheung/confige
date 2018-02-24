@@ -391,7 +391,7 @@ const copy = config.__.clone(obj);
 // merge target object's copy into source object's copy deeply
 const merged = config.__.merge(source, target);
 
-// loaded environment variables, optionally inject them into process.env
+// load environment variables, optionally inject them into process.env
 const envs = config.__.env('./.env', true);
 
 // parse config by json string
@@ -400,7 +400,7 @@ let conf = config.__.resolve(JSON.parse(fs.readFileSync('./config.json', 'utf8')
 // load config by path(absolute or relative to working directory)
 conf = config.__.load('./config.json');
 
-// delete config referenced cache. the next time you reference this module, config file will be reloaded
+// delete config referenced cache(the next time you reference this module, config file will be reloaded)
 config.__.desolve();
 ```
 
@@ -408,7 +408,7 @@ You can also use utils without the config instance:
 
 ```javascript
 const utils = require('@pyramid/configure/utils');
-// utils.desolve will be undefined
+// NOTE: utils.desolve will be undefined
 ```
 
 ## Webpack

@@ -1,6 +1,6 @@
 {
   "name": "@pyramid/configure",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Smart configuration control",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,12 @@
     "config",
     "configuration",
     "env",
-    "environment"
+    "environment",
+    "webpack",
+    "loader",
+    "plugin",
+    "utils",
+    "dotenv"
   ],
   "author": "Sean Cheung <theoxuanx@gmail.com>",
   "license": "MIT",

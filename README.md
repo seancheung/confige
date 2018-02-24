@@ -29,6 +29,23 @@ console.log(config.database.mysql.host)
 console.log(config.language.supported[0])
 ```
 
+If folder *config* does not exist, file *config.json* will be checked instead.
+
+- config.json
+
+```json
+{
+    "app": {
+        "name": "MY APP"
+    }
+}
+```
+
+```javascript
+const config = require('@pyramid/configure');
+console.log(config.app.name)
+```
+
 You can override the config file path with an environment variable:
 
 ```javascript
@@ -360,6 +377,93 @@ $gt, $gte, $lt, $lte, $eq, $ne, $in, $ni
 **String Morph**
 
 $upper, $lower, $snake, $pascal, $camel, $dash, $plural, $singular
+
+
+## Utils
+
+A utils is attached to each config instance. You can acces it by the getter `__`:
+
+```javascript
+
+// make a deep cloned copy
+const copy = config.__.clone(obj);
+
+// merge target object's copy into source object's copy deeply
+const merged = config.__.merge(source, target);
+
+// loaded environment variables, optionally inject them into process.env
+const envs = config.__.env('./.env', true);
+
+// parse config by json string
+let conf = config.__.resolve(JSON.parse(fs.readFileSync('./config.json', 'utf8')));
+
+// load config by path(absolute or relative to working directory)
+conf = config.__.load('./config.json');
+
+// delete config referenced cache. the next time you reference this module, config file will be reloaded
+config.__.desolve();
+```
+
+You can also use utils without the config instance:
+
+```javascript
+const utils = require('@pyramid/configure/utils');
+// utils.desolve will be undefined
+```
+
+## Webpack
+
+To integrate into webpack, there is a built-in plugin:
+
+```javascript
+const ConfigurePlugin = require('@pyramid/configure/utils/webpack');
+```
+
+*webpack.config.js*
+
+```javascript
+plugins: [
+    new ConfigurePlugin({ filename: path.resolve(__dirname, 'path/to/config.json') }),
+]
+```
+
+And import that config in your modules:
+
+*index.js*
+
+```javascript
+import * as config from './path/to/config.json';
+```
+
+You may add a resolve alias to shorten the import: 
+
+*webpack.config.js*
+
+```javascript
+resolve: {
+    alias: {
+        config: path.resolve(__dirname, 'path/to/config.json')
+    }
+},
+```
+
+*index.js*
+
+```javascript
+import * as config from 'config';
+```
+
+**NOTE**
+
+By default the json config is loaded as string. It's also compatible with file-loader. If conflicts occur, you may need to bypass the specific loader(s) with `include/exclude` filters. e.g.
+
+```javascript
+{
+    test: /\.json$/,
+    exclude: /\/config\.json$/,
+    use: 'some-loader'
+}
+```
 
 ## Test
 

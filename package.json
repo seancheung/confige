@@ -1,6 +1,6 @@
 {
   "name": "@pyramid/configure",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Smart configuration control",
   "main": "index.js",
   "scripts": {

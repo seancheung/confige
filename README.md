@@ -364,15 +364,43 @@ Return true only if the given value is false
 - params: `boolean`
 - returns `boolean`
 
+**$true**
+
+Return true if the given value is true or 'true'(case insensitive)
+
+- params: `boolean|string`
+- returns `boolean`
+
+**$null**
+
+Return true if the given value is null or undefined
+
+- params: `any`
+- returns `boolean`
+
+**$undefined**
+
+Return true only if the given value is undefined
+
+- params: `any`
+- returns `boolean`
+
+**$type**
+
+Return true only if the given value is of the given type
+
+- params: `[any, string]`
+- returns `boolean`
+
 ### Other Keywords
 
 **Operators** 
 
-$abs, $add, $sub, $mul, $div, $mod, $ceil, $floor, $round, $trunc, $sign
+$abs, $add(+), $sub(-), $mul(*), $div(/), $mod(%), $ceil, $floor, $round, $trunc, $sign
 
 **Comparers**
 
-$gt, $gte, $lt, $lte, $eq, $ne, $in, $ni
+$gt(>), $gte(>=), $lt(<), $lte(<=), $eq(===), $eqv(==), $ne(!==), $nev(!=), $in, $ni
 
 **String Morph**
 

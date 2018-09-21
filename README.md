@@ -1,16 +1,16 @@
-# Configure
+# Confige
 
 [![Master Build][travis-master]][travis-url]
 
 Smart configuration control
 
-[travis-master]: https://img.shields.io/travis/pyramidjs/configure/master.svg?label=master
-[travis-url]: https://travis-ci.org/pyramidjs/configure
+[travis-master]: https://img.shields.io/travis/seancheung/confige/master.svg?label=master
+[travis-url]: https://travis-ci.org/seancheung/confige
 
 ## Install
 
 ```bash
-npm i @pyramid/configure
+npm i confige
 ```
 
 ## Basic Usage
@@ -23,7 +23,7 @@ This package by default read the _config_ folder in your working directory:
   * language.json
 
 ```javascript
-const config = require("@pyramid/configure");
+const config = require("confige");
 console.log(config.app.name);
 console.log(config.database.mysql.host);
 console.log(config.language.supported[0]);
@@ -42,7 +42,7 @@ If folder _config_ does not exist, file _config.json_ will be checked instead.
 ```
 
 ```javascript
-const config = require("@pyramid/configure");
+const config = require("confige");
 console.log(config.app.name);
 ```
 
@@ -71,7 +71,7 @@ _src/config.json_
 
 ```javascript
 process.env.CONFIG_FILE = src / config.json;
-const config = require("@pyramid/configure");
+const config = require("confige");
 console.log(config.app.name);
 ```
 
@@ -81,7 +81,7 @@ It won't be loaded again once done. To reload configs, you need to call:
 // delete cached config
 config.__.desolve();
 // reload
-config = require("@pyramid/configure");
+config = require("confige");
 ```
 
 ## Env File
@@ -97,7 +97,7 @@ You may override this behaviour by passing the following environment variable:
 
 ```javascript
 process.env.ENV_FILE=src/.env
-const config = require('@pyramid/configure');
+const config = require('confige');
 ```
 
 You may optionally set `ENV_INJECT` to inject env file variables into `process.env`.
@@ -447,7 +447,7 @@ config.__.desolve();
 You can also use utils without the config instance:
 
 ```javascript
-const utils = require("@pyramid/configure/utils");
+const utils = require("confige/utils");
 // NOTE: utils.desolve will be undefined
 ```
 
@@ -456,7 +456,7 @@ const utils = require("@pyramid/configure/utils");
 To integrate into webpack, there is a built-in plugin:
 
 ```javascript
-const ConfigurePlugin = require("@pyramid/configure/utils/webpack");
+const ConfigurePlugin = require("confige/utils/webpack");
 ```
 
 _webpack.config.js_
@@ -515,4 +515,4 @@ npm test
 
 ## License
 
-See [License](https://github.com/pyramidjs/configure/blob/master/LICENSE)
+See [License](https://github.com/seancheung/confige/blob/master/LICENSE)

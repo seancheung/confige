@@ -1,5 +1,5 @@
 {
-  "name": "@pyramid/configure",
+  "name": "confige",
   "version": "0.3.5",
   "description": "Smart configuration control",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pyramidjs/configure.git"
+    "url": "git+https://github.com/seancheung/confige.git"
   },
   "keywords": [
     "conf",
@@ -25,9 +25,9 @@
   "author": "Sean Cheung <theoxuanx@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pyramidjs/configure/issues"
+    "url": "https://github.com/seancheung/confige/issues"
   },
-  "homepage": "https://github.com/pyramidjs/configure#readme",
+  "homepage": "https://github.com/seancheung/confige#readme",
   "dependencies": {
     "inflection": "^1.12.0"
   },
